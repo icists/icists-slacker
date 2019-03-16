@@ -1,5 +1,5 @@
 const { RTMClient } = require('@slack/client');
-const token = process.env.SLACK_TOKEN || 'xoxb-555076495158-579009083892-BGz7XE0qh5qQ4ae04oEXu6Xk';
+const token = process.env.SLACK_TOKEN || 'xoxb-555076495158-579009083892-AICgKyn2znZsS8DvuUrnOW7A';
 const rtm = new RTMClient(token);
 rtm.start();
 
@@ -23,7 +23,7 @@ rtm.on('message', (message) => {
                 channel = message.channel;
                 user = message.user;
                 isRecording = true;
-                rtm.sendMessage(moment().tz('Asia/Seoul').format('MMMM Do YYYY, h:mm:ss a') + " 출석 체크를 진행합니다." + "\n지금 도착한 경우 'c : 백승호' 와 같이 입력해 주세요." + "\n 출석 체크를 늦게 한 경우 'r : 백승호 10:30:51' 과 같이 입력해 주세요.", message.channel);
+                rtm.sendMessage(moment().tz('Asia/Seoul').format('MMMM Do YYYY, h:mm a') + " 출석 체크를 진행합니다." + "\n1./ 'c : 백승호' / 지금 도착한 경우" + "\n2./ 'r : 백승호 10:30' / 출석을 늦게 한 경우", message.channel);
             } else{
                 rtm.sendMessage("이미 출석 체크를 진행하고 있습니다.", message.channel);
             }
@@ -33,10 +33,10 @@ rtm.on('message', (message) => {
                 channel = undefined;
                 user = undefined;
                 first = true;
-                rtm.sendMessage("출석 체크가 종료되었습니다.\n" + moment().tz('Asia/Seoul').format('MMMM Do YYYY, h:mm:ss a'), message.channel);
-                if(data.length != 0){
-                    rtm.sendMessage(data[0].time, message.channel);
-                }
+                rtm.sendMessage("출석 체크가 종료되었습니다.\n" + moment().tz('Asia/Seoul').format('MMMM Do YYYY, h:mm a'), message.channel);
+                // if(data.length != 0){
+                //     rtm.sendMessage(data[0].time, message.channel);
+                // }
             }else {
                 rtm.sendMessage("출석을 시작한 사람이 출석을 시작한 채널에서 회의를 종료해야 합니다.", message.channel);
             }
@@ -46,7 +46,7 @@ rtm.on('message', (message) => {
             if(text.startsWith("c :")){
                 var name = text.replace("c : ", "");
                 var time = 
-                data.push({"time": moment().tz('Asia/Seoul').format('h:mm:ss'), "name": name});
+                data.push({"time": moment().tz('Asia/Seoul').format('h:mm'), "name": name});
             } else if(text.startsWith("r :")){
                 var arr = text.replace("r : ", "").split(" ");
                 data.push({"time": arr[1], "name": arr[0]});
