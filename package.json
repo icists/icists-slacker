@@ -1,27 +1,28 @@
 {
-  "name": "ho_bot",
+  "name": "slack-bot",
   "version": "1.0.0",
-  "description": "Slackbot that help work",
-  "main": "index.js",
+  "description": "Work Efficiently!",
+  "main": "app.js",
+  "dependencies": {
+    "@slack/client": "^4.11.0",
+    "moment-timezone": "^0.5.23",
+    "request": "^2.88.0"
+  },
+  "devDependencies": {},
   "scripts": {
-    "start": "node index.js"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/TheStarkor/ho_bot.git"
+    "url": "git+https://github.com/icists/slack-bot.git"
   },
-  "author": "Seungho Baek",
+  "keywords": [
+    "slack"
+  ],
+  "author": "Seugnho, Bongjun",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/TheStarkor/ho_bot/issues"
+    "url": "https://github.com/icists/slack-bot/issues"
   },
-  "homepage": "https://github.com/TheStarkor/ho_bot#readme",
-  "dependencies": {
-    "@slack/client": "^4.11.0",
-    "axios": "^0.18.0",
-    "moment": "^2.24.0",
-    "moment-timezone": "^0.5.23",
-    "save": "^2.3.3",
-    "slackbots": "^1.2.0"
-  }
+  "homepage": "https://github.com/icists/slack-bot#readme"
 }

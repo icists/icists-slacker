@@ -1,5 +1,5 @@
 const { RTMClient } = require('@slack/client');
-const token = process.env.SLACK_TOKEN || 'xoxb-550778942626-580224021367-CcpPpmIFaud13ke0NFPK7SSt';
+const token = process.env.SLACK_TOKEN || 'xoxb-550778942626-580224021367-nYeMKSWI5tN8QC4USHu3x1Zu';
 const rtm = new RTMClient(token);
 rtm.start();
 
@@ -89,7 +89,7 @@ rtm.on('message', (message) => {
         } else if (text.includes("주제") || text.includes("성문화")){
             rtm.sendMessage("https://icists.slack.com/archives/CG6EKF14Z/p1550545483000500", message.channel);
         } else if (text.includes("OC") && text.includes("정보")){
-            rtm.sendMessage("https://icists.org/info", message.channel);        
+            rtm.sendMessage("업데이트 예정입니다.", message.channel);        
         } else if (text.includes("디벨롭") && text.includes("요청")) {
             rtm.sendMessage("디벨롭 요청 절차는\n" + 
                 "0./ 가능한 일인지 td 부원한테 간단히 확인 한다.\n" +
@@ -101,11 +101,16 @@ rtm.on('message', (message) => {
             rtm.sendMessage("https://drive.google.com/drive/folders/1TfduSF3rP7Kbv_FfVU1ahEHO23QtQWTu?usp=sharing", message.channel);
         } else if (text.includes("irs")) {
             rtm.sendMessage("https://drive.google.com/drive/folders/1OSjqiz0vzodil2k9Bcwe97BXXZilPuSO?usp=sharing", message.channel);
-        }
-        else if (text.includes("help")){
+        } else if (text.includes("벡미록")) {
+            rtm.sendMessage("https://drive.google.com/drive/folders/1sJiRuOCRgeJWD-K6F21Fbzx64od__6KF?usp=sharing", message.channel);
+        } else if (text.includes("연사")) {
+            rtm.sendMessage("유재준 : 7월 29일\n김치앤칩스 스튜디오 : 8월 1일\n그 외 무수히 많은 긍정적인 답변:clapping:", message.channel);
+        } else if (text.includes("날씨")) {
+            weatherFN(function(body){rtm.sendMessage(body, message.channel);})
+        } else if (text.includes("help")) {
             rtm.sendMessage("Type @ho with " + "\n" + 
                 "#attend 에서만 '출석 시작 10:30' and '출석 종료' 가능" + "\n" +
-                "'logo' or '로고' / " + "'주제' or '성문화' /" + " 'OC 정보' /" + " '디벨롭 요청' /" + " '예산 신청' or 'irs'", message.channel);
+                "'logo' or '로고' / " + "'주제' or '성문화' /" + " 'OC 정보' /" + " '디벨롭 요청' /" + " '예산 신청' or 'irs' /" + " '벡미록' /" + " '연사'", message.channel);
         }
     } catch (err) {
         rtm.sendMessage("error : " + err, message.channel);
@@ -122,3 +127,19 @@ function is_late(base, cmp) {
     cmp = (Number)(arr_2[0]) * 60 + (Number)(arr_2[1]);
     return cmp - base;
 }
+
+const lat = 37.518252;
+const long = 127.023549;
+const DARK_API_KEY = "671ceb0806fa18629ad632450b858a5a";
+const requst = require('request');
+
+function weatherFN(callback) {
+    requst(`https://apu.darksky.net/forcast/${DARK_API_KEY}/${lat},${long}?lang=ko&units=si`, {json:true}, (err,res,body) => {
+        if(err) {return console.log(err);}
+        var w1 = body.currently.summary;
+        var w2 = body.currently.temperature + "℃"
+        var w3 = body.currently.humidity * 100 + "%"
+        var weatherValue = "날씨 : " + w1 + "\n기온 : " + w2 + "\n습도 : " + w3
+        callback (weatherValue);
+    });
+};
