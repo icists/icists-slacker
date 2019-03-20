@@ -5,7 +5,7 @@ Slack utilization for ICISTS Slack.
 ## How to use
 
 > 1. clone it.  
-> 2. Run app.js with node.js
+> 2. Run app.js with node.js.  
 ```$ node app.js```
 
 ## Support
