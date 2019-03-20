@@ -14,3 +14,6 @@ Slack utilization for ICISTS Slack.
 > 2. IRS System Helper
 > 3. Even more?
 
+## Dependency
+
+1. This project depends on [node slack sdk](https://github.com/slackapi/node-slack-sdk)
