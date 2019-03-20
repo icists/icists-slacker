@@ -1,3 +1,2 @@
 @slack/client --save
 moment-timezone --save
-moment --save
