@@ -5,7 +5,8 @@ Slack utilization for ICISTS Slack.
 ## How to use
 
 > 1. clone it.  
-> 2. $ node app.js
+> 2. Run app.js with node.js.  
+```$ node app.js```
 
 ## Support
 
@@ -13,3 +14,6 @@ Slack utilization for ICISTS Slack.
 > 2. IRS System Helper
 > 3. Even more?
 
+## Dependency
+
+1. This project depends on [node slack sdk](https://github.com/slackapi/node-slack-sdk)
