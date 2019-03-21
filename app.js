@@ -1,5 +1,5 @@
 const { RTMClient, WebClient } = require('@slack/client');
-const token = process.env.SLACK_TOKEN || 'xoxb-550778942626-580224021367-nYeMKSWI5tN8QC4USHu3x1Zu';
+const token = process.env.SLACK_TOKEN || 'xoxb-550778942626-579012696386-CTzWXjIFlYyrEnbDBf3jbVy8';
 const rtm = new RTMClient(token);
 const web = new WebClient(token);
 
@@ -7,7 +7,7 @@ const web = new WebClient(token);
 const attend_channel = "CH0UYMVBN";
 
 // variables for attendance check
-const moment = require('moment-timezone');
+const moment = require('./lib/moment-timezone');
 let is_recording = false;
 let channel = undefined;
 let first = true;
