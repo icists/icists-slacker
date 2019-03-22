@@ -4,7 +4,7 @@
   "description": "Work Efficiently!",
   "main": "app.js",
   "dependencies": {
-    "@slack/client": "^4.11.0",
+    "@slack/client": "^4.12.0",
     "moment-timezone": "^0.5.23",
     "request": "^2.88.0"
   },

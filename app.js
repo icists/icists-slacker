@@ -1,5 +1,5 @@
 const { RTMClient, WebClient } = require('@slack/client');
-const token = process.env.SLACK_TOKEN || 'xoxb-550778942626-579012696386-CTzWXjIFlYyrEnbDBf3jbVy8';
+const token = process.env.SLACK_TOKEN || 'xoxb-550778942626-579012696386-eKFdgkFeufxveAeWW5kIqGpQ';
 const rtm = new RTMClient(token);
 const web = new WebClient(token);
 
@@ -31,7 +31,8 @@ const bot_func = {
     IRS: 'irs',
     SPEAKERS: 'speakers',
     VECTOR_MEETING: 'vector_meeting',
-    WEATHER: 'weather'
+    WEATHER: 'weather',
+    NULL: null,
 }
 
 function init_attendance_check_variables() {
@@ -85,6 +86,8 @@ function parse_msg_txt(text) {
     else if (text.includes("날씨")) {
         return bot_func.WEATHER;
     }
+    else
+        return bot_func.NULL;
 }
 
 rtm.start();
@@ -93,12 +96,11 @@ rtm.on('message', (message) => {
     let text = message.text;
 
     if (text == undefined) return;
+
+    let request = parse_msg_txt(text);
+    if (request == bot_func.NULL) return; 
     
     try {
-        // 출석
-        // if the message comes from attend channel
-        request = parse_msg_txt(text);
-
         console.log(text);
 
         switch (request) {
