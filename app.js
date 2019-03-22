@@ -1,5 +1,5 @@
 const { RTMClient, WebClient } = require('@slack/client');
-const token = process.env.SLACK_TOKEN || 'xoxb-550778942626-579012696386-eKFdgkFeufxveAeWW5kIqGpQ';
+const token = process.env.SLACK_TOKEN || 'xoxb-550778942626-579012696386-PhTlRbwoK9xbvZdnfiAre21t';
 const rtm = new RTMClient(token);
 const web = new WebClient(token);
 
@@ -44,46 +44,57 @@ function init_attendance_check_variables() {
 }
 
 function parse_msg_txt(text) {
-    if (text.includes("help")) {
+    // Check if the request is valid or not
+    var call_token = "!도와줘 ";
+    if (text == "!도와줘") {
         return bot_func.HELP;
     }
-    else if (text.includes("출석") && text.includes("시작")) {
+    if (!text.startsWith(call_token)) {
+        return bot_func.NULL;
+    }
+
+    var req_txt = text.slice(call_token.length);
+ 
+    if (req_txt.includes("help")) {
+        return bot_func.HELP;
+    }
+    else if (req_txt.includes("출석") && req_txt.includes("시작")) {
         return bot_func.ATTEND.START;
     }
-    else if (text.includes("출석") && text.includes("종료")) {
+    else if (req_txt.includes("출석") && req_txt.includes("종료")) {
         return bot_func.ATTEND.END;
     }
-    else if (text.startsWith("c :")) {
+    else if (req_txt.startsWith("c :")) {
         return bot_func.ATTEND.ENROLL_AUTO;
     }
-    else if (text.startsWith("r :")) {
+    else if (req_txt.startsWith("r :")) {
         return bot_func.ATTEND.ENROLL_MANU;
     }
-    else if (text.includes("logo") || text.includes("로고")) {
+    else if (req_txt.includes("logo") || req_txt.includes("로고")) {
         return bot_func.LOGO;
     }
-    else if (text.includes("주제") || text.includes("성문화")) {
+    else if (req_txt.includes("주제") || req_txt.includes("성문화")) {
         return bot_func.TOPIC;
     }
-    else if (text.includes("OC") && text.includes("정보")) {
+    else if (req_txt.includes("OC") && req_txt.includes("정보")) {
         return bot_func.OC;
     }
-    else if (text.includes("디벨롭") && text.includes("요청")) {
+    else if (req_txt.includes("디벨롭") && req_txt.includes("요청")) {
         return bot_func.DEV_REQ;
     }
-    else if (text.includes("예산 신청")) {
+    else if (req_txt.includes("예산 신청")) {
         return bot_func.BUDGET;
     }
-    else if (text.includes("irs")) {
+    else if (req_txt.includes("irs")) {
         return bot_func.IRS;
     }
-    else if (text.includes("벡미록")) {
+    else if (req_txt.includes("벡미록")) {
         return bot_func.VECTOR_MEETING;
     }
-    else if (text.includes("연사")) {
+    else if (req_txt.includes("연사")) {
         return bot_func.SPEAKERS;
     }
-    else if (text.includes("날씨")) {
+    else if (req_txt.includes("날씨")) {
         return bot_func.WEATHER;
     }
     else
@@ -97,6 +108,7 @@ rtm.on('message', (message) => {
 
     if (text == undefined) return;
 
+
     let request = parse_msg_txt(text);
     if (request == bot_func.NULL) return; 
     
@@ -105,8 +117,8 @@ rtm.on('message', (message) => {
 
         switch (request) {
             case bot_func.ATTEND.START:
-                if (message.channel == attend_channel) {
-                    if (is_recording == true) {
+            if (message.channel == attend_channel) {
+                if (is_recording == true) {
                         rtm.sendMessage("이미 출석 체크를 진행하고 있습니다.", message.channel);
                         return;
                     }
